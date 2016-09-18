@@ -7,8 +7,8 @@
     <ProjectGuid>{7DE67180-2D20-4079-9B8B-41AEC77C02F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PluginManager</RootNamespace>
-    <AssemblyName>PluginManager</AssemblyName>
+    <RootNamespace>PluginFramework</RootNamespace>
+    <AssemblyName>PluginFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿namespace PluginManager
+﻿namespace PluginFramework
 {
     public interface IPlugin
     {

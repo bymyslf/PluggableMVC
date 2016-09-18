@@ -1,8 +1,8 @@
 ﻿using System.Web;
 
-[assembly: PreApplicationStartMethod(typeof(PluginManager.PreApplicationStart), "InitializePlugins")]
+[assembly: PreApplicationStartMethod(typeof(PluginFramework.PreApplicationStart), "InitializePlugins")]
 
-namespace PluginManager
+namespace PluginFramework
 {
     using System;
     using System.IO;
@@ -24,7 +24,7 @@ namespace PluginManager
             }
 
             PluginFolder = new DirectoryInfo(pluginsPath);
-            TempPluginFolder = new DirectoryInfo(pluginsTempPath);
+            ShadowCopyFolder = new DirectoryInfo(pluginsTempPath);
         }
 
         /// <summary>
@@ -38,15 +38,15 @@ namespace PluginManager
         /// <summary>
         /// The folder to  copy the plugin DLLs to use for running the app
         /// </summary>
-        private static readonly DirectoryInfo TempPluginFolder;
+        private static readonly DirectoryInfo ShadowCopyFolder;
 
         /// <summary>
         /// Initialize method that registers all plugins
         /// </summary>
         public static void InitializePlugins()
         {
-            Directory.CreateDirectory(TempPluginFolder.FullName);
-            foreach (var dll in TempPluginFolder.GetFiles("*.dll", SearchOption.AllDirectories))
+            Directory.CreateDirectory(ShadowCopyFolder.FullName);
+            foreach (var dll in ShadowCopyFolder.GetFiles("*.dll", SearchOption.AllDirectories))
             {
                 try
                 {
@@ -62,7 +62,7 @@ namespace PluginManager
             {
                 try
                 {
-                    var di = Directory.CreateDirectory(TempPluginFolder.FullName);
+                    var di = Directory.CreateDirectory(ShadowCopyFolder.FullName);
                     File.Copy(plug.FullName, Path.Combine(di.FullName, plug.Name), true);
                 }
                 catch (Exception)
@@ -73,7 +73,7 @@ namespace PluginManager
             // * This will put the plugin assemblies in the 'Load' context
             // This works but requires a 'probing' folder be defined in the web.config
             // eg: <probing privatePath="plugins/temp" />
-            var assemblies = TempPluginFolder.GetFiles("*.dll", SearchOption.AllDirectories)
+            var assemblies = ShadowCopyFolder.GetFiles("*.dll", SearchOption.AllDirectories)
                     .Select(x => AssemblyName.GetAssemblyName(x.FullName))
                     .Select(x => Assembly.Load(x.FullName));
 
