@@ -16,5 +16,10 @@
         /// Entry controller name
         /// </summary>
         string EntryControllerName { get; }
+
+        /// <summary>
+        /// Initialize the plugin with all the scripts, css and DI
+        /// </summary>
+        void Initialize();
     }
 }

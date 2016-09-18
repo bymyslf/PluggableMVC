@@ -13,18 +13,20 @@ namespace PluginFramework
 
     public class PreApplicationStart
     {
+        private const string DllExtension = "*.dll";
+
         static PreApplicationStart()
         {
-            string pluginsPath = HostingEnvironment.MapPath("~/plugins");
-            string pluginsTempPath = HostingEnvironment.MapPath("~/plugins/temp");
+            string pluginsPath = HostingEnvironment.MapPath("~/Plugins");
+            string pluginsShadowPath = HostingEnvironment.MapPath("~/Plugins/Temp");
 
-            if (pluginsPath == null || pluginsTempPath == null)
+            if (pluginsPath == null || pluginsShadowPath == null)
             {
-                throw new DirectoryNotFoundException("plugins");
+                throw new DirectoryNotFoundException("Plugins");
             }
 
             PluginFolder = new DirectoryInfo(pluginsPath);
-            ShadowCopyFolder = new DirectoryInfo(pluginsTempPath);
+            ShadowCopyFolder = new DirectoryInfo(pluginsShadowPath);
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace PluginFramework
         public static void InitializePlugins()
         {
             Directory.CreateDirectory(ShadowCopyFolder.FullName);
-            foreach (var dll in ShadowCopyFolder.GetFiles("*.dll", SearchOption.AllDirectories))
+            foreach (var dll in ShadowCopyFolder.GetFiles(DllExtension, SearchOption.AllDirectories))
             {
                 try
                 {
@@ -58,7 +60,7 @@ namespace PluginFramework
             }
 
             //copy files
-            foreach (var plug in PluginFolder.GetFiles("*.dll", SearchOption.AllDirectories))
+            foreach (var plug in PluginFolder.GetFiles(DllExtension, SearchOption.AllDirectories))
             {
                 try
                 {
@@ -73,7 +75,7 @@ namespace PluginFramework
             // * This will put the plugin assemblies in the 'Load' context
             // This works but requires a 'probing' folder be defined in the web.config
             // eg: <probing privatePath="plugins/temp" />
-            var assemblies = ShadowCopyFolder.GetFiles("*.dll", SearchOption.AllDirectories)
+            var assemblies = ShadowCopyFolder.GetFiles(DllExtension, SearchOption.AllDirectories)
                     .Select(x => AssemblyName.GetAssemblyName(x.FullName))
                     .Select(x => Assembly.Load(x.FullName));
 
@@ -82,12 +84,10 @@ namespace PluginFramework
                 Type type = assembly.GetTypes().Where(t => t.GetInterface(typeof(IPlugin).Name) != null).FirstOrDefault();
                 if (type != null)
                 {
-                    //Add the plugin as a reference to the application
                     BuildManager.AddReferencedAssembly(assembly);
 
-                    ////Add the modules to the PluginManager to manage them later
-                    //var module = (IModule)Activator.CreateInstance(type);
-                    //PluginManager.Current.Modules.Add(module, assembly);
+                    var plugin = (IPlugin)Activator.CreateInstance(type);
+                    PluginRegistry.Current.Plugins.Add(plugin);
                 }
             }
         }
