@@ -48,6 +48,7 @@ namespace PluginFramework
         public static void InitializePlugins()
         {
             Directory.CreateDirectory(ShadowCopyFolder.FullName);
+
             foreach (var dll in ShadowCopyFolder.GetFiles(DllExtension, SearchOption.AllDirectories))
             {
                 try
@@ -59,7 +60,6 @@ namespace PluginFramework
                 }
             }
 
-            //copy files
             foreach (var plug in PluginFolder.GetFiles(DllExtension, SearchOption.AllDirectories))
             {
                 try
