@@ -194,7 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\TestPlugin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -202,7 +201,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\TestPlugin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PluginFramework\PluginFramework.csproj">
@@ -247,8 +246,12 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>set pluginDir="$(SolutionDir)\PluggableMVC\Plugins\$(TargetName)\"
+set viewsDir= ""
 if not exist "%25pluginDir%25"  mkdir "%25pluginDir%25"
-copy /Y "$(TargetPath)" "%25pluginDir%25"</PostBuildEvent>
+xcopy "$(TargetPath)" "%25pluginDir%25" /sy
+if not exist "$(SolutionDir)\PluggableMVC\Plugins\$(TargetName)\Views\"  mkdir "$(SolutionDir)\PluggableMVC\Plugins\$(TargetName)\Views\"
+xcopy "$(ProjectDir)Views" "$(SolutionDir)\PluggableMVC\Plugins\$(TargetName)\Views\" /sy
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
