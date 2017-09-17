@@ -11,6 +11,7 @@ namespace PluginFramework
     using System.Web.Compilation;
     using System.Web.Hosting;
 
+    //https://shazwazza.com/post/developing-a-plugin-framework-in-aspnet-with-medium-trust/
     public class PreApplicationStart
     {
         private const string DllExtension = "*.dll";
