@@ -9,7 +9,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return "TestPlugin";
             }
         }
 
@@ -17,7 +17,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return "TestPlugin";
             }
         }
 
@@ -25,13 +25,12 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return "Test Plugin Controller";
             }
         }
 
         public void Initialize()
         {
-            throw new NotImplementedException();
         }
     }
 }

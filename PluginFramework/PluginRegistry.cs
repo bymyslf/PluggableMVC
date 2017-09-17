@@ -16,6 +16,6 @@
             get { return current ?? (current = new PluginRegistry()); }
         }
 
-        internal List<IPlugin> Plugins { get; private set; }
+        public List<IPlugin> Plugins { get; private set; }
     }
 }
