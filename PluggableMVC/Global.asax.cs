@@ -10,19 +10,14 @@ using PluginFramework.ViewEngine;
 
 namespace PluggableMVC
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : PluggableApplication
     {
-        protected void Application_Start()
+        protected override void OnApplicationStarting(object sender, EventArgs e)
         {
-            PluginBootstrapper.Initialize();
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new PluginViewEngine());
         }
     }
 }

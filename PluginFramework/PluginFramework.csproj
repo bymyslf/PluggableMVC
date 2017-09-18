@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPlugin.cs" />
+    <Compile Include="PluggableApplication.cs" />
     <Compile Include="PluginBootstrapper.cs" />
     <Compile Include="PluginRegistry.cs" />
     <Compile Include="PreApplicationStart.cs" />

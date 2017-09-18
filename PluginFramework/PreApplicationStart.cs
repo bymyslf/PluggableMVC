@@ -5,6 +5,7 @@
 namespace PluginFramework
 {
     using System;
+    using System.Collections.Concurrent;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -18,6 +19,11 @@ namespace PluginFramework
 
         private static readonly DirectoryInfo PluginFolder;
         private static readonly DirectoryInfo ShadowCopyFolder;
+
+        private static object lockObject = new object();
+
+        private static readonly Lazy<ConcurrentDictionary<string, LoadedAssembly>> loadedAssemblies =
+            new Lazy<ConcurrentDictionary<string, LoadedAssembly>>(() => new ConcurrentDictionary<string, LoadedAssembly>());
 
         static PreApplicationStart()
         {
@@ -78,6 +84,19 @@ namespace PluginFramework
                     PluginRegistry.Current.AddPlugin(plugin);
                 }
             }
+        }
+
+        private class LoadedAssembly
+        {
+            public LoadedAssembly(DateTime loadTime, Assembly assembly)
+            {
+                this.Assembly = assembly;
+                this.LoadTime = loadTime;
+            }
+
+            public DateTime LoadTime { get; private set; }
+
+            public Assembly Assembly { get; private set; }
         }
     }
 }
