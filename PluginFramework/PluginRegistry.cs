@@ -1,12 +1,15 @@
 ﻿namespace PluginFramework
 {
     using System.Collections.Generic;
+    using System.Collections.Immutable;
 
     public class PluginRegistry
     {
+        private readonly List<IPlugin> plugins;
+
         private PluginRegistry()
         {
-            this.Plugins = new List<IPlugin>();
+            this.plugins = new List<IPlugin>();
         }
 
         private static PluginRegistry current;
@@ -16,6 +19,14 @@
             get { return current ?? (current = new PluginRegistry()); }
         }
 
-        public List<IPlugin> Plugins { get; private set; }
+        internal void AddPlugin(IPlugin plugin)
+        {
+            this.plugins.Add(plugin);
+        }
+
+        public IReadOnlyList<IPlugin> Plugins
+        {
+            get { return this.plugins.ToImmutableList(); }
+        }
     }
 }

@@ -88,7 +88,7 @@ namespace PluginFramework
                     BuildManager.AddReferencedAssembly(assembly);
 
                     var plugin = (IPlugin)Activator.CreateInstance(type);
-                    PluginRegistry.Current.Plugins.Add(plugin);
+                    PluginRegistry.Current.AddPlugin(plugin);
                 }
             }
         }
