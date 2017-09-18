@@ -16,6 +16,9 @@ namespace PluginFramework
     {
         private const string DllExtension = "*.dll";
 
+        private static readonly DirectoryInfo PluginFolder;
+        private static readonly DirectoryInfo ShadowCopyFolder;
+
         static PreApplicationStart()
         {
             string pluginsPath = HostingEnvironment.MapPath("~/Plugins");
@@ -30,22 +33,6 @@ namespace PluginFramework
             ShadowCopyFolder = new DirectoryInfo(pluginsShadowPath);
         }
 
-        /// <summary>
-        /// The source plugin folder from which to copy from
-        /// </summary>
-        /// <remarks>
-        /// This folder can contain sub folders to organize plugin types
-        /// </remarks>
-        private static readonly DirectoryInfo PluginFolder;
-
-        /// <summary>
-        /// The folder to  copy the plugin DLLs to use for running the app
-        /// </summary>
-        private static readonly DirectoryInfo ShadowCopyFolder;
-
-        /// <summary>
-        /// Initialize method that registers all plugins
-        /// </summary>
         public static void InitializePlugins()
         {
             Directory.CreateDirectory(ShadowCopyFolder.FullName);
