@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace PluginFramework.ViewEngine
 {
@@ -16,23 +13,65 @@ namespace PluginFramework.ViewEngine
 
         private void ExpandViewLocations()
         {
-            var existingViewPaths = new List<string>(ViewLocationFormats);
-            var existingPartialViewPaths = new List<string>(PartialViewLocationFormats);
+            var areaViewLocationFormats = new List<string>();
+            var areaMasterLocationFormats = new List<string>();
+            var areaPartialViewLocationFormats = new List<string>();
+            var viewLocationFormats = new List<string>();
+            var masterLocationFormats = new List<string>();
+            var partialViewLocationFormats = new List<string>();
 
             foreach (var plugin in PluginRegistry.Current.Plugins)
             {
-                var viewsPath = $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.cshtml";
-                var sharedViewsPath = $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.cshtml";
+                areaViewLocationFormats.AddRange(new[] {
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/{{1}}/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/{{1}}/{{0}}.vbhtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/Shared/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/Shared/{{0}}.vbhtml"
+                });
 
-                existingViewPaths.Add(viewsPath);
-                existingViewPaths.Add(sharedViewsPath);
+                areaMasterLocationFormats.AddRange(new[] {
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/{{1}}/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/{{1}}/{{0}}.vbhtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/Shared/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/Shared/{{0}}.vbhtml"
+                });
 
-                existingPartialViewPaths.Add(viewsPath);
-                existingPartialViewPaths.Add(sharedViewsPath);
+                areaPartialViewLocationFormats.AddRange(new[] {
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/{{1}}/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/{{1}}/{{0}}.vbhtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/Shared/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Areas/{{2}}/Views/Shared/{{0}}.vbhtml"
+                });
+
+                viewLocationFormats.AddRange(new[] {
+                    $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.vbhtml",
+                    $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.vbhtml"
+                });
+
+                masterLocationFormats.AddRange(new[] {
+                    $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.vbhtml",
+                    $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.vbhtml"
+                });
+
+                partialViewLocationFormats.AddRange(new[] {
+                    $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Views/{{1}}/{{0}}.vbhtml",
+                    $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.cshtml",
+                    $"~/Plugins/{plugin.Name}/Views/Shared/{{0}}.vbhtml"
+                });
             }
 
-            this.ViewLocationFormats = existingViewPaths.ToArray();
-            this.PartialViewLocationFormats = existingPartialViewPaths.ToArray();
+            this.AreaViewLocationFormats = this.AreaViewLocationFormats.Concat(areaViewLocationFormats).ToArray();
+            this.AreaMasterLocationFormats = this.AreaMasterLocationFormats.Concat(areaMasterLocationFormats).ToArray();
+            this.AreaPartialViewLocationFormats = this.AreaPartialViewLocationFormats.Concat(areaPartialViewLocationFormats).ToArray();
+
+            this.ViewLocationFormats = this.ViewLocationFormats.Concat(viewLocationFormats).ToArray();
+            this.MasterLocationFormats = this.MasterLocationFormats.Concat(masterLocationFormats).ToArray();
+            this.PartialViewLocationFormats = this.PartialViewLocationFormats.Concat(partialViewLocationFormats).ToArray();
         }
     }
 }
