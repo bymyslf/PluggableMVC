@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Linq;
-
-namespace PluginFramework.ViewEngine
+﻿namespace PluginFramework.ViewEngine
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using System.Linq;
+
     public class PluginViewEngine : RazorViewEngine
     {
         public PluginViewEngine()

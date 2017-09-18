@@ -24,9 +24,6 @@
             this.plugins.Add(plugin);
         }
 
-        public IReadOnlyList<IPlugin> Plugins
-        {
-            get { return this.plugins.ToImmutableList(); }
-        }
+        public IReadOnlyList<IPlugin> Plugins => this.plugins.ToImmutableList();
     }
 }
