@@ -12,9 +12,9 @@ namespace PluggableMVC
 {
     public class MvcApplication : PluggableApplication
     {
-        protected override void OnApplicationStarting(object sender, EventArgs e)
+        protected override void OnApplicationStart(object sender, EventArgs e)
         {
-            base.OnApplicationStarting(sender, e);
+            base.OnApplicationStart(sender, e);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

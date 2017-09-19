@@ -47,10 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Disposable.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="PluggableApplication.cs" />
     <Compile Include="PluginBootstrapper.cs" />
     <Compile Include="PluginRegistry.cs" />
+    <Compile Include="PluginWatcher.cs" />
     <Compile Include="PreApplicationStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewEngine\PluginViewEngine.cs" />
