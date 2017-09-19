@@ -11,21 +11,21 @@
         private static readonly object @lock = new object();
         private readonly List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
 
-        public void Start(params string[] pluginFolders)
+        public void Start(string[] pluginFolders)
         {
             foreach (var folder in pluginFolders)
             {
                 if (Directory.Exists(folder))
                 {
-                    var fsw = new FileSystemWatcher(folder, "*.dll")
+                    var watcher = new FileSystemWatcher(folder, "*.dll")
                     {
                         IncludeSubdirectories = true,
                         NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
                     };
 
-                    watchers.Add(fsw);
-                    fsw.Changed += FswChanged;
-                    fsw.EnableRaisingEvents = true;
+                    watchers.Add(watcher);
+                    watcher.Changed += FswChanged;
+                    watcher.EnableRaisingEvents = true;
                 }
             }
         }

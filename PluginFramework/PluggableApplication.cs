@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Web;
     using System.Web.Hosting;
     using System.Web.Mvc;
@@ -28,8 +29,11 @@
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new PluginViewEngine());
 
-            var pluginsFolder = HostingEnvironment.MapPath("~/Plugins");
-            this.pluginWatcher.Start(Directory.GetDirectories(pluginsFolder));
+            var pluginFolder = HostingEnvironment.MapPath("~/Plugins");
+            var pluginFolders = Directory.GetDirectories(pluginFolder)
+                  .Where(dir => !dir.EndsWith("Temp")).ToArray();
+
+            this.pluginWatcher.Start(pluginFolders);
         }
 
         protected virtual void OnApplicationEnd(object sender, EventArgs e)
