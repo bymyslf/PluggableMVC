@@ -24,13 +24,13 @@
                     };
 
                     watchers.Add(watcher);
-                    watcher.Changed += FswChanged;
+                    watcher.Changed += WatcherChanged;
                     watcher.EnableRaisingEvents = true;
                 }
             }
         }
 
-        private void FswChanged(object sender, FileSystemEventArgs e)
+        private void WatcherChanged(object sender, FileSystemEventArgs e)
         {
             //Ensure the app is not restarted multiple times for multiple saving during the same app domain execution
             if (isRestarting == false)
@@ -50,9 +50,9 @@
 
         protected override void DisposeResources()
         {
-            foreach (var fw in watchers)
+            foreach (var watcher in watchers)
             {
-                fw.Dispose();
+                watcher.Dispose();
             }
         }
     }
