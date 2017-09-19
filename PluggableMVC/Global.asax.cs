@@ -14,6 +14,8 @@ namespace PluggableMVC
     {
         protected override void OnApplicationStarting(object sender, EventArgs e)
         {
+            base.OnApplicationStarting(sender, e);
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

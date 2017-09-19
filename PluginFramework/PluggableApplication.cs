@@ -9,16 +9,15 @@
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            PluginBootstrapper.Initialize();
-
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new PluginViewEngine());
-
             this.OnApplicationStarting(sender, e);
         }
 
         protected virtual void OnApplicationStarting(object sender, EventArgs e)
         {
+            PluginBootstrapper.Initialize();
+
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new PluginViewEngine());
         }
     }
 }
