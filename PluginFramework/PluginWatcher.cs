@@ -4,6 +4,7 @@
     using System.IO;
     using System.Web;
 
+    //Based on this: https://github.com/umbraco/Umbraco-CMS/blob/5397f2c53acbdeb0805e1fe39fda938f571d295a/src/Umbraco.Core/Manifest/ManifestWatcher.cs
     public class PluginWatcher : Disposable
     {
         private static volatile bool isRestarting = false;
