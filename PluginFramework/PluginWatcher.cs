@@ -4,7 +4,8 @@
     using System.IO;
     using System.Web;
 
-    //Based on this: https://github.com/umbraco/Umbraco-CMS/blob/5397f2c53acbdeb0805e1fe39fda938f571d295a/src/Umbraco.Core/Manifest/ManifestWatcher.cs
+    //See: https://github.com/umbraco/Umbraco-CMS/blob/5397f2c53acbdeb0805e1fe39fda938f571d295a/src/Umbraco.Core/Manifest/ManifestWatcher.cs
+    //Read: http://dejanstojanovic.net/aspnet/2015/january/application-plugin-host-with-assembly-caching-and-auto-reloading/
     public class PluginWatcher : Disposable
     {
         private static volatile bool isRestarting = false;
